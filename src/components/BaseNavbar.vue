@@ -12,20 +12,12 @@ export default {
 
     <v-spacer></v-spacer>
 
-    <v-btn
-      href="https://github.com/vuetifyjs/vuetify/releases/latest"
-      target="_blank"
-      text
-    >
+    <v-btn to="/" text>
       <span class="mr-2">Все задачи</span>
       <v-icon>mdi-open-in-new</v-icon>
     </v-btn>
 
-    <v-btn
-      href="https://github.com/vuetifyjs/vuetify/releases/latest"
-      target="_blank"
-      text
-    >
+    <v-btn to="/new" text>
       <span class="mr-2">Создать</span>
       <v-icon>mdi-open-in-new</v-icon>
     </v-btn>

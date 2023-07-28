@@ -1,42 +1,24 @@
 <script>
-import { useRouter } from "vue-router/composables";
-
 export default {
   name: "TasksListView",
+  props: {
+    id: String,
+  },
   data() {
-    return {
-      tasks: [
-        {
-          id: 1,
-          title: "One",
-          date: "01.05.2020",
-          description: "Lorem ipsum dolor sit amet.",
-          status: "complete",
-        },
-        {
-          id: 2,
-          title: "Two",
-          date: "01.05.2020",
-          description: "Lorem ipsum dolor sit amet.",
-          status: "overdue",
-        },
-        {
-          id: 3,
-          title: "Three",
-          date: "01.05.2020",
-          description: "Lorem ipsum dolor sit amet.",
-          status: "ongoing",
-        },
-      ],
-    };
+    return {};
+  },
+  computed: {
+    tasks() {
+      return this.$store.getters.getTasks;
+    },
   },
   methods: {
     openTask(id) {
       this.$router.push(`/task/${id}`);
     },
-  },
-  created() {
-    useRouter(this.$router);
+    getTaskById(id) {
+      return this.tasks.find((task) => task.id === id);
+    },
   },
 };
 </script>
@@ -44,7 +26,7 @@ export default {
 <template>
   <div class="home my-container mt-10">
     <!--  here v-if next div for v-else  -->
-    <h2 class="text--white justify-center" v-if="tasks.length === 0">
+    <h2 class="text--white justify-center" v-if="tasks.length <= 0">
       Задач пока нет
     </h2>
     <template v-else>
