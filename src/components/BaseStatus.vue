@@ -1,17 +1,11 @@
-<script>
-const classesMap = {
-  active: "primary",
-  cancelled: "danger",
-  done: "primary",
-  pending: "warning",
-};
+<template>
+  <div class="status mt-10">
+    <span :class="['badge', className]">{{ text ?? "Активен" }}</span>
+  </div>
+</template>
 
-const textMap = {
-  active: "Активен",
-  cancelled: "Отменен",
-  done: "Завершен",
-  pending: "Выполняется",
-};
+<script>
+import { ref, watch } from "vue";
 
 export default {
   name: "BaseStatus",
@@ -26,24 +20,32 @@ export default {
     },
   },
   data() {
-    return {
-      className: classesMap[this.type],
-      text: textMap[this.type],
+    const classesMap = {
+      active: "primary",
+      cancelled: "danger",
+      done: "primary",
+      pending: "warning",
     };
-  },
-  watch: {
-    observeType(newValue) {
-      this.className = classesMap[newValue];
-      this.text = textMap[newValue];
-    },
+
+    const textMap = {
+      active: "Активен",
+      cancelled: "Отменен",
+      done: "Завершен",
+      pending: "Выполняется",
+    };
+
+    const className = ref(classesMap[this.type]);
+    const text = ref(textMap[this.type]);
+
+    watch(this.$props, (value) => {
+      className.value = classesMap[value.type];
+      text.value = textMap[value.type];
+    });
+
+    return {
+      text,
+      className,
+    };
   },
 };
 </script>
-
-<template>
-  <div class="status mt-10">
-    <span :class="['badge', className]">{{ text ?? "Активен" }}</span>
-  </div>
-</template>
-
-<style scoped></style>

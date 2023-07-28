@@ -14,20 +14,13 @@ const routes = [
     path: "/task/:id",
     name: "task",
     props: true,
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/TaskItemView.vue"),
+    component: () => import("@/views/TaskItemView.vue"),
   },
   {
     path: "/new",
     name: "newTask",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/NewTaskView.vue"),
+      import(/* webpackChunkName: "about" */ "@/views/NewTaskView.vue"),
   },
 ];
 

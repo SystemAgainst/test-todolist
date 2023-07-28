@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     setStatus(status) {
-      const updated = { ...this.taskById.status, status };
+      const updated = { ...this.taskById, status };
       this.$store.dispatch("changeTask", updated);
     },
   },
