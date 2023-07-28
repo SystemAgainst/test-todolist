@@ -8,26 +8,17 @@ export default {
     tasks() {
       return this.$store.getters.getTasks;
     },
-    filteredTasks() {
+    taskById() {
       return this.tasks.find((task) => task.id === this.id);
     },
   },
   data() {
-    return {
-      taskById: null,
-    };
+    return {};
   },
   methods: {
     setStatus(status) {
-      if (this.taskById) {
-        const updated = { ...this.taskById, status };
-        this.$store.dispatch("changeTask", updated);
-      }
-    },
-  },
-  watch: {
-    filteredTasks() {
-      this.taskById = this.filteredTasks;
+      const updated = { ...this.taskById.status, status };
+      this.$store.dispatch("changeTask", updated);
     },
   },
 };
