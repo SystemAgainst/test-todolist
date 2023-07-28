@@ -1,6 +1,4 @@
 <script>
-import { mapState } from "vuex";
-
 export default {
   name: "TaskItemView",
   props: {
@@ -10,16 +8,26 @@ export default {
     tasks() {
       return this.$store.getters.getTasks;
     },
-  },
-  data() {
-    return {};
-  },
-  methods: {
-    getTaskById() {
+    filteredTasks() {
       return this.tasks.find((task) => task.id === this.id);
     },
+  },
+  data() {
+    return {
+      taskById: null,
+    };
+  },
+  methods: {
     setStatus(status) {
-      alert(status);
+      if (this.taskById) {
+        const updated = { ...this.taskById, status };
+        this.$store.dispatch("changeTask", updated);
+      }
+    },
+  },
+  watch: {
+    filteredTasks() {
+      this.taskById = this.filteredTasks;
     },
   },
 };
@@ -28,24 +36,19 @@ export default {
 <template>
   <div class="task my-container mt-10">
     <v-card class="mx-auto my-5 pa-5">
-      <v-card-title>
-        Название: Title
-      </v-card-title>
+      <v-card-title> Название: {{ taskById?.title }} </v-card-title>
       <v-divider />
 
       <v-card-subtitle>
         Статус:
-        <v-badge content="Выполняется" inline>
+        <v-badge :content="taskById?.status" inline>
           <v-icon icon="$vuetify" size="x-large"></v-icon>
         </v-badge>
       </v-card-subtitle>
 
-      <v-card-subtitle> Дедлайн: 09.10.2022 </v-card-subtitle>
+      <v-card-subtitle> Дедлайн: {{ taskById?.date }} </v-card-subtitle>
 
-      <v-card-text>
-        Описание: Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        Dolore, reprehenderit.
-      </v-card-text>
+      <v-card-text> Описание: {{ taskById?.description }}. </v-card-text>
 
       <div class="d-flex">
         <v-card-actions @click="setStatus('pending')">

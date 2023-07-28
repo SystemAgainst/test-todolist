@@ -11,6 +11,7 @@ export default {
       id: Date.now().toString(),
       title: "",
       description: "",
+      status: "active",
       date: null,
     };
   },
@@ -24,7 +25,7 @@ export default {
         title: this.title,
         date: new Date(this.date).setHours(23, 59, 59, 999),
         description: this.description,
-        status: "active",
+        status: this.status,
       };
 
       this.$store.commit("ADD_TASK", newTaskObj);
