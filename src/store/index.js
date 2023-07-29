@@ -23,9 +23,9 @@ export default new Vuex.Store({
       state.tasks.push(task);
       localStorage.setItem("my-tasks", JSON.stringify(state.tasks));
     },
-    CHANGE_TASK(state, task) {
-      const idx = state.tasks.findIndex((t) => t.id === task.id);
-      state.tasks[idx] = task;
+    CHANGE_TASK(state, [id, status]) {
+      const taskIndex = state.tasks.findIndex((t) => t.id === id);
+      state.tasks[taskIndex].status = status;
       localStorage.setItem("my-tasks", JSON.stringify(state.tasks));
     },
   },
@@ -37,8 +37,8 @@ export default new Vuex.Store({
       }
       commit("SET_TASK", task);
     },
-    changeTask: ({ commit }, task) => {
-      commit("CHANGE_TASK", task);
+    changeTask: ({ commit }, [id, status]) => {
+      commit("CHANGE_TASK", [id, status]);
     },
   },
   modules: {},

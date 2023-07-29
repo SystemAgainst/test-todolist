@@ -1,24 +1,25 @@
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "TaskItemView",
   props: {
     id: String,
   },
   computed: {
-    tasks() {
-      return this.$store.getters.getTasks;
-    },
+    ...mapGetters({
+      tasks: "getTasks",
+    }),
     taskById() {
-      return this.tasks.find((task) => task.id === this.id);
+      return this.tasks.find((el) => el.id === this.id);
     },
-  },
-  data() {
-    return {};
   },
   methods: {
+    ...mapActions({
+      changeTask: "changeTask",
+    }),
     setStatus(status) {
-      const updated = { ...this.taskById, status };
-      this.$store.dispatch("changeTask", updated);
+      this.changeTask([this.id, status]);
     },
   },
 };
@@ -27,7 +28,7 @@ export default {
 <template>
   <div class="task my-container mt-10">
     <v-card class="mx-auto my-5 pa-5">
-      <v-card-title> Название: {{ taskById?.title }} </v-card-title>
+      <v-card-title> Название: {{ taskById?.title }}</v-card-title>
       <v-divider />
 
       <v-card-subtitle>
@@ -37,9 +38,9 @@ export default {
         </v-badge>
       </v-card-subtitle>
 
-      <v-card-subtitle> Дедлайн: {{ taskById?.date }} </v-card-subtitle>
+      <v-card-subtitle> Дедлайн: {{ taskById?.date }}</v-card-subtitle>
 
-      <v-card-text> Описание: {{ taskById?.description }}. </v-card-text>
+      <v-card-text> Описание: {{ taskById?.description }}.</v-card-text>
 
       <div class="d-flex">
         <v-card-actions @click="setStatus('pending')">
